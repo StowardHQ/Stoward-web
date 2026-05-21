@@ -14,7 +14,7 @@ import ServerCard from "../components/ServerCard";
 
 // TODO: This should be done elsewhere, not in Home
 const fetchServers = async () => {
-  const response = await fetch("/api/servers");
+  const response = await fetch("https://api.asraye.com/api/servers");
   if (!response.ok) throw new Error("Failed to scout servers");
   return response.json();
 };
