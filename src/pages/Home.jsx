@@ -5,22 +5,18 @@ import {
   BiSolidGroup,
   BiSolidHide,
   BiSolidShow,
+  BiSolidServer,
   BiSolidTimeFive,
 } from "solid-icons/bi";
 import { FiActivity } from "solid-icons/fi";
 import { createResource, createSignal, For, Show } from "solid-js";
 import { TransitionGroup } from "solid-transition-group";
 import ServerCard from "../components/ServerCard";
-
-// TODO: This should be done elsewhere, not in Home
-const fetchServers = async () => {
-  const response = await fetch("https://api.asraye.com/api/servers");
-  if (!response.ok) throw new Error("Failed to scout servers");
-  return response.json();
-};
+import { fetchServers, fetchStats } from "../api";
 
 export default function Home() {
   const [servers] = createResource(fetchServers);
+  const [stats] = createResource(fetchStats);
   const [searchQuery, setSearchQuery] = createSignal("");
   const [allowNsfw, setAllowNsfw] = createSignal(false);
   const [sortBy, setSortBy] = createSignal("bumps");
@@ -92,6 +88,22 @@ export default function Home() {
 
       <section class="flex min-h-[85vh] flex-col items-center justify-between gap-[60px] px-[7%] py-20 md:flex-row">
         <div class="max-w-[600px] text-center md:text-left">
+          <Show when={!stats.loading && !stats.error && stats()}>
+            {(data) => (
+              <div class="bg-brand-surface border-brand-border/30 text-brand-textSecondary mb-6 inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-1 rounded-full border px-4 py-1.5 text-xs font-semibold tracking-wide shadow-sm md:justify-start">
+                <div class="flex items-center gap-1.5">
+                  <BiSolidServer size={14} class="text-brand-teal" />
+                  <span>{data().total_servers.toLocaleString()} Servers</span>
+                </div>
+                <span class="text-brand-border/60 hidden sm:inline">|</span>
+                <div class="flex items-center gap-1.5">
+                  <BiSolidGroup size={14} class="text-brand-teal" />
+                  <span>{data().total_members.toLocaleString()} Members</span>
+                </div>
+              </div>
+            )}
+          </Show>
+
           <h1 class="line-tight mb-5 text-5xl leading-[1.05] font-bold md:text-[72px]">
             Discover Your <span class="text-brand-orange">Space</span>
           </h1>
