@@ -131,7 +131,7 @@ export default function Home() {
 
         <div class="relative flex h-80 w-80 shrink-0 items-center justify-center md:h-[500px] md:w-[500px]">
           <img
-            src="/Stoward.png"
+            src="/Stoward.png" // TODO(01KS9NPZJK9GFD1WA12GCJERWN): Force Vix to make a SVG version (that looks good)
             alt="Stoward the scout himself!"
             class="pointer-events-none h-full w-full animate-[float_3s_ease-in-out_infinite] object-contain select-none"
           />
