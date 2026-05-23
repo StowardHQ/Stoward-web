@@ -14,8 +14,14 @@ export default function ServerCard(props) {
 
   const getTags = () => {
     if (!props.server.description) return [];
-    const tags = props.server.description.match(/#\w+/g);
-    return tags ? tags.map((tag) => tag.replace("#", "")).slice(0, 3) : [];
+    const normalizedDescription = props.server.description.normalize('NFKC');
+    const tags = normalizedDescription.match(/#\w+/g);
+    return tags 
+      ? tags.map((tag) => {
+          const cleanTag = tag.replace("#", "");
+          return cleanTag.charAt(0).toUpperCase() + cleanTag.slice(1);
+        }).slice(0, 3) 
+      : [];
   };
 
   const formatTimeAgo = (dateString) => {
