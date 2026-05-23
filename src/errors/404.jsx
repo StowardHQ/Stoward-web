@@ -21,7 +21,7 @@ export default function NotFound() {
         href="/"
         class="group inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#4DB6AC] to-[#3aa197] px-6 py-3 font-['Poppins','Nunito',sans-serif] font-bold text-white shadow-lg shadow-[#4DB6AC]/30 transition-all duration-200 hover:scale-105 hover:shadow-xl hover:shadow-[#4DB6AC]/40 active:scale-95">
         <span class="mr-2 transition-transform duration-200 group-hover:-translate-x-1"></span>
-        Back to Safety
+        Back to Discover
       </a>
     </section>
   );
