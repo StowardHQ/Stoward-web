@@ -1,3 +1,4 @@
+import { A } from "@solidjs/router";
 import {
   BiSolidCheckCircle,
   BiSolidChevronDown,
@@ -6,47 +7,12 @@ import {
   BiSolidTimeFive,
 } from "solid-icons/bi";
 import { For, Show, createEffect, createSignal, onMount } from "solid-js";
+import { extractTags, formatTimeAgo } from "../utils/helpers";
 
 export default function ServerCard(props) {
   const [isOpen, setIsOpen] = createSignal(false);
   const [hasOverflow, setHasOverflow] = createSignal(false);
   let textRef;
-
-  const getTags = () => {
-    if (!props.server.description) return [];
-    const normalizedDescription = props.server.description.normalize('NFKC');
-    const tags = normalizedDescription.match(/#\w+/g);
-    return tags 
-      ? tags.map((tag) => {
-          const cleanTag = tag.replace("#", "");
-          return cleanTag.charAt(0).toUpperCase() + cleanTag.slice(1);
-        }).slice(0, 3) 
-      : [];
-  };
-
-  const formatTimeAgo = (dateString) => {
-    if (!dateString) return "recently";
-
-    const now = new Date();
-    const normalizedDateString =
-      dateString.includes("Z") || dateString.includes("+")
-        ? dateString
-        : `${dateString.replace(" ", "T")}Z`;
-
-    const then = new Date(normalizedDateString);
-    const seconds = Math.floor((now.getTime() - then.getTime()) / 1000);
-
-    if (seconds < 5) return "just now";
-    if (seconds < 60) return `${seconds}s ago`;
-
-    const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return `${minutes}m ago`;
-
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `${hours}h ago`;
-
-    return `${Math.floor(hours / 24)}d ago`;
-  };
 
   const checkOverflow = () => {
     if (textRef) {
@@ -95,7 +61,7 @@ export default function ServerCard(props) {
             <img
               src={props.server.icon_url}
               alt={`${props.server.server_name} icon`}
-              class={`h-full w-full object-cover transition-all duration-500 ${
+              class={`sobject-cover h-full w-full transition-all duration-500 ${
                 props.server.is_nsfw === 1
                   ? "pointer-events-none scale-110 blur-md select-none group-hover:scale-100 group-hover:blur-none"
                   : ""
@@ -110,7 +76,12 @@ export default function ServerCard(props) {
             <h3
               class="text-brand-textPrimary truncate text-xl font-bold"
               title={props.server.server_name}>
-              {props.server.server_name}
+              <A
+                href={`/server/${props.server.server_id} `}
+                preload={true}
+                class="hover:text-brand-teal transition-colors duration-200">
+                {props.server.server_name}
+              </A>
             </h3>
             <Show when={props.server.is_verified === 1}>
               <span
@@ -171,11 +142,14 @@ export default function ServerCard(props) {
 
         <div class="mb-4 flex flex-grow items-end overflow-hidden">
           <div class="flex w-full flex-wrap gap-2">
-            <For each={getTags()}>
+            <For each={extractTags(props.server.description)}>
               {(tag) => (
-                <span class="bg-brand-elevated text-brand-textSecondary border-brand-border rounded-full border px-3 py-1 text-xs font-medium tracking-wide whitespace-nowrap">
-                  {tag}
-                </span>
+                <A
+                  href={`/tag/${tag.toLowerCase()}`}
+                  preload={true}
+                  class="bg-brand-elevated text-brand-textSecondary border-brand-border hover:border-brand-teal hover:text-brand-teal rounded-full border px-3 py-1 text-xs font-medium tracking-wide whitespace-nowrap no-underline transition-colors duration-200">
+                  #{tag}
+                </A>
               )}
             </For>
           </div>

@@ -1,7 +1,5 @@
 import { lazy } from "solid-js";
-
 import Home from "./pages/Home";
-import AddServer from "./pages/AddServer";
 
 export const routes = [
   {
@@ -10,7 +8,15 @@ export const routes = [
   },
   {
     path: "/add-server",
-    component: AddServer,
+    component: lazy(() => import("./pages/AddServer")),
+  },
+  {
+    path: "/server/:sid",
+    component: lazy(() => import("./pages/ServerPage")),
+  },
+  {
+    path: "/tag/:tag",
+    component: lazy(() => import("./pages/TagPage")),
   },
   {
     path: "**",

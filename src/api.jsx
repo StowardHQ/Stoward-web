@@ -10,6 +10,15 @@ export const fetchServers = async () => {
   return response.json();
 };
 
+// Fetch server from API
+export const fetchSingleServer = async (sid) => {
+  const response = await fetch(`${BASE_URL}/servers/${sid}`);
+  if (!response.ok) {
+    throw new Error(`Failed to scout server with ID: ${sid}`);
+  }
+  return response.json();
+};
+
 // Fetch Stoward stats from API
 export const fetchStats = async () => {
   const response = await fetch(`${BASE_URL}/stats`);

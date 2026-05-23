@@ -3,9 +3,9 @@ import "solid-devtools";
 import "./index.css";
 
 import { render } from "solid-js/web";
-
-import App from "./app";
 import { Router } from "@solidjs/router";
+import { MetaProvider } from "@solidjs/meta";
+import App from "./app";
 import { routes } from "./routes";
 
 const root = document.getElementById("root");
@@ -16,4 +16,11 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
-render(() => <Router root={(props) => <App>{props.children}</App>}>{routes}</Router>, root);
+render(
+  () => (
+    <MetaProvider>
+      <Router root={(props) => <App>{props.children}</App>}>{routes}</Router>
+    </MetaProvider>
+  ),
+  root,
+);
