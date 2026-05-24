@@ -11,6 +11,10 @@ export const routes = [
     component: lazy(() => import("./pages/AddServer")),
   },
   {
+    path: "/docs",
+    component: lazy(() => import("./pages/Docs")),
+  },
+  {
     path: "/server/:sid",
     component: lazy(() => import("./pages/ServerPage")),
   },

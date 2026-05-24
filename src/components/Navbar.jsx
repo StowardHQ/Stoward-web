@@ -56,6 +56,12 @@ export default function Navbar() {
           class="text-brand-textPrimary hover:text-brand-teal font-medium no-underline transition-all duration-200 hover:-translate-y-0.5">
           Add Server
         </A>
+        <A
+          href="/docs"
+          onClick={closeMenu}
+          class="text-brand-textPrimary hover:text-brand-teal font-medium no-underline transition-all duration-200 hover:-translate-y-0.5">
+          Documentation
+        </A>
         <a
           href="https://stt.gg/VHS7Pe7k"
           target="_blank"
@@ -100,6 +106,12 @@ export default function Navbar() {
           onClick={closeMenu}
           class="text-brand-textPrimary border-brand-border/30 hover:text-brand-teal border-b py-2 text-lg font-medium no-underline transition-colors">
           Add Server
+        </A>
+        <A
+          href="/docs"
+          onClick={closeMenu}
+          class="text-brand-textPrimary border-brand-border/30 hover:text-brand-teal border-b py-2 text-lg font-medium no-underline transition-colors">
+          Documentation
         </A>
         <a
           href="https://stt.gg/VHS7Pe7k"
